@@ -93,5 +93,106 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/plain">
+		[ㄅ 八 b]
+		[ㄆ 杷 p]
+		[ㄇ 馬 m]
+		[ㄈ 法 f]
+		[ㄉ 地 d]
+		[ㄊ 提 t]
+		[ㄋ 乃 n]
+		[ㄌ 力 l]
+		[ㄍ 告 g]
+		[ㄎ 考 k]
+		[ㄏ 好 h]
+		[ㄐ 叫 j]
+		[ㄑ 巧 q]
+		[ㄒ 下 x]
+		[ㄓ 之 zh]
+		[ㄔ 彳 ch]
+		[ㄕ 尸 sh]
+		[ㄖ 日 r]
+		[ㄗ 在 z]
+		[ㄘ 才 c]
+		[ㄙ 私 s]
+	</script>
+	<script>
+		var ATOM = /^[^\(\)\[\]\s.#]+/,
+			SPACES = /^\s*/,
+			META_ID = /^#[^\(\)\[\]\s]+/,
+			META_CLASSES = /^\.[^\(\)\[\]\s]+/
+		function parse(str) {
+			var start = skipSpaces(str, 0)
+			if (str[start] === '(') return parseExpr('expr', ')', str, start)
+			if (str[start] === '[') return parseExpr('seq', ']', str, start)
+		}
+		function parseExpr(type,close,str, start) {
+			var expr = {type:type, start:start, children:[]},
+				i = skipSpaces(str, start+1)
+			expr.end = i+1
+			if (str[i] !== close) {
+				expr.children = parseChildren(close, str, i)
+				if (expr.children) {
+					expr.end = expr.children[expr.children.length-1].end + 1
+				}
+			}
+			parseMeta(expr, str)
+			expr.snippet = str.substring(expr.start,expr.end)
+			return expr
+		}
+		function parseChildren(close, str, start) {
+			var children,
+				child,
+				z = str.length
+			for (var i=start; i < z;) {
+				i = skipSpaces(str, i)
+				if (str[i] === close) {
+					break;
+				} else if (str[i] === '[') {
+					child = parseExpr('seq', ']', str, i);
+				} else if (str[i] === '(') {
+					child = parseExpr('expr', ')', str, i)
+				} else {
+					child = parseAtom(str, i)
+				}
+				if (!child) break;
+				if (!children) children = [];
+				children.push(child)
+				i = child.end
+			}
+			return children
+		}
+		function parseAtom(str, start) {
+			var m = str.substring(start).match(ATOM)
+			if (m) {
+				var atom = {
+					type:'atom',
+					start: start,
+					end: start + m[0].length,
+					value: m[0]
+				}
+				parseMeta(atom, str)
+				atom.snippet = str.substring(atom.start, atom.end)
+				return atom
+			}
+		}
+		function parseMeta(node, str) {
+			var m = str.substring(node.end).match(META_ID)
+			if (m) {
+				node.id = m[0].substring(1)
+				node.end += m[0].length;
+			}
+			m = str.substring(node.end).match(META_CLASSES)
+			if (m) {
+				node.classes = m[0].substring(1).split('.')
+				node.end += m[0].length;
+			}
+		}
+		function skipSpaces(str, start) {
+			return start + str.substring(start).match(SPACES)[0].length
+		}
+
+		console.warn(JSON.stringify(parse('(table (combine.later.blah tr [split 3 td] []#triplets))'),null,4))
+	</script>
 </body>
 </html>
