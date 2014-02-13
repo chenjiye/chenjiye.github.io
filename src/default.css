@@ -1,0 +1,235 @@
+* {
+	box-sizing: border-box;
+}
+html {
+	margin: 0;
+	padding: 0;
+	position:absolute;
+	top:0;
+	left:0;
+	bottom:0;
+	right:0;
+	overflow:hidden;
+}
+body {
+	position:absolute;
+	top:0;
+	left:0;
+	bottom:0;
+	right:0;
+	margin:0;
+	background-image: url('lib/brown-felt-background.png');
+	box-shadow: inset 0 0 3px 5px hsla(30,50%,10%,0.3);
+	font-family: arial;
+	font-size: 16px;
+	color: hsl(30,30%,15%);
+	overflow:scroll;
+}
+.panel-title {
+	border-top: solid 1px hsl(30,80%,50%);
+	box-shadow: inset 0 4px 3px hsla(30,80%,50%,0.3),
+				inset 0 -2px 2px 1px hsla(30,80%,50%,0.2),
+				0 1px 2px 1px hsla(30,50%,10%,0.3);
+	background: hsla(30,80%,50%,0.1);
+	padding: 8px;
+	border-radius: 8px;
+	margin: 20px auto;
+	width: 600px;
+}
+.row {
+	white-space: nowrap;
+}
+.row > * {
+	display: inline-block;
+	vertical-align:top;
+	white-space:normal;
+	margin-right: 40px;
+}
+.row > :last-child {
+	margin-right: 0;
+}
+h6 {
+	margin:8px 0;
+	padding-bottom: 4px;
+	border-bottom: dotted 1px hsl(30,30%,30%);
+}
+
+.panel-body {
+	width: 600px;
+	margin: 20px auto;
+}
+article {
+	margin: 100px auto;
+}
+.sentence {
+	display:block;
+	padding: 0;
+	border-radius:2px;
+	margin-bottom: 4px;
+}
+.date {
+	float:right;
+	color: hsl(35,40%,60%);
+	display:block;
+	font-size: 12px;
+}
+i {
+	white-space: nowrap;
+	font-style: normal;
+	color: hsl(30,50%,30%);
+}
+.row {
+	margin: 10px 0;
+}
+.row > * {
+	display:inline-block;
+	vertical-align:top;
+}
+ul {
+	margin:0;
+	margin-right: 20px;
+	padding:0;
+	padding-left: 20px;
+}
+.node-classes {
+	background:hsl(0,0%,80%);
+	color:hsl(0,0%,30%);
+	box-shadow: 0 2px 3px 1px hsla(0,0%,0%,0.3);
+	font-family:arial;
+	font-size:12px;
+	padding: 0 8px;
+	display:inline-block;
+	vertical-align:middle;
+	height: 20px;
+	line-height:20px;
+	position:relative;
+	margin-left: -8px;
+	width: 80px;
+}
+.node-classes:after {
+	content:'';
+	width:0;
+	height:0;
+	border-left:solid 4px transparent;
+	border-top:solid 4px hsl(0,0%,80%);
+	position:absolute;
+	top:0px;
+	left:-4px;
+}
+.node-classes:before {
+	content:'.';
+}
+.node.has-node-id,
+.node.has-node-classes {
+	margin-right: 6px;
+}
+.node-id {
+	background:hsl(0,0%,80%);
+	color:hsl(0,0%,30%);
+	box-shadow: 0 2px 3px 1px hsla(0,0%,0%,0.3);
+	font-family:arial;
+	font-size:12px;
+	padding: 0 8px;
+	display:inline-block;
+	vertical-align:middle;
+	height: 20px;
+	line-height:20px;
+	margin-left: -8px;
+	position:relative;
+	width: 80px;
+}
+.node-id:before {
+	content:'#';
+}
+.node-id:after {
+	content:'';
+	width:0;
+	height:0;
+	border-left:solid 4px transparent;
+	border-top:solid 4px hsl(0,0%,80%);
+	position:absolute;
+	top:0px;
+	left:-4px;
+}
+.node-children[data-node-type="seq"] {
+	border: solid 2px hsl(150,20%,25%);
+	border-top:0;
+	border-bottom:solid 2px hsl(150,20%,25%);
+	min-width:20px;
+	min-height:20px;
+	border-radius: 0 0 4px 4px;
+}
+.node-children > .node {
+	margin-bottom: 4px;
+}
+.node-children > .node:last-child {
+	margin-bottom: 0;
+}
+.node-children[data-node-type="seq"] {
+	box-shadow: inset 0 2px 3px hsla(0,0%,0%,0.3);
+	max-height: 200px;
+	overflow: scroll;
+}
+.node-children[data-node-type="seq"] > .node {
+	margin-top: 8px;
+}
+.node-children {
+	margin-right: 12px;
+	display:inline-block;
+	vertical-align:top;
+}
+.node {
+	display:inline-block;
+	vertical-align:top;
+}
+.node-children > .node {
+	display:block;
+}
+.node[data-node-type="atom"]:focus {
+	background:hsla(200,80%,50%,0.4);
+}
+.node[data-node-type="atom"] {
+	margin-right: 4px;
+	background:transparent;
+	outline:0;
+	border:0;
+	color: hsl(30,30%,20%);
+	padding:0 2px;
+	min-width: 20px;
+	text-align:center;
+	height:20px;
+	line-height:20px;
+	font-size:12px;
+	font-family:arial;
+}
+.node[data-node-type="atom"]:last-child {
+	margin-right: 0;
+}
+.node.meta-class-triplets > .node-children > .node > .node-children > .node {
+	display:inline-block;
+}
+.node-children[data-node-type="seq"] > .node[data-node-type="seq"] {
+	margin-left: 12px;
+}
+.node-children[data-node-type="seq"] > .node[data-node-type="seq"] {
+	margin-bottom: 12px;
+}
+.node[data-node-type="expr"] {
+	border-radius: 4px;
+	border-left: solid 2px hsl(30,30%,35%);
+}
+.node-children[data-node-type="expr"] {
+	border-radius: 4px;
+	border-right: solid 2px hsl(30,30%,35%);
+}
+.node-apply[data-node-type="atom"] {
+	text-align:left;
+}
+#hello {
+	position:fixed;
+	top:15px;
+	left:15px;
+	color: hsl(35,40%,60%);
+	text-shadow: 0 2px 0 hsl(30,50%,30%);
+}
+
