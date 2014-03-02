@@ -1,12 +1,55 @@
 require([
 	'lisp/parser',
+	'lisp/vm',
 	'lisp/renderer',
-	'lisp/query'
+	'lisp/query',
+	'text!data/entry.000.000.001.txt'
 ], function(
 	parser,
+	vm,
 	renderer,
-	query
+	query,
+	entryText
 ) {
+	var entryAst = parser.parse(entryText);
+	var ARTICLE = {
+		title: function(article) {
+			article.title = _.pluck(_.rest(arguments), 'str').join(' ')
+	    },
+		created: function(article) {
+			article.created = _.pluck(_.rest(arguments), 'str').join(' ')
+	    },
+		say: function(article) {
+			article.sentences.push(_.pluck(_.rest(arguments), 'str').join(' '))
+	    }
+	};
+	var BLOG = {
+		'entry': function(blog) {
+			_.each(_.rest(arguments), function(node) {
+				vm.run(BLOG, node, [blog]);
+			});
+			return blog;
+		},
+		'article': function(blog) {
+			var article = {
+				title:'',
+				created:'',
+				sentences: []
+			};
+			_.each(_.rest(arguments), function(node) {
+				vm.run(ARTICLE, node, [article]);
+			});
+			blog.articles.push(article);
+		},
+		'vocab': function(blog) {
+		}
+	};
+	var blog1 = vm.run(BLOG, entryAst, [{
+		articles: [],
+		vocabulary: []
+	}]);
+	console.warn(blog1);
+
 	$(document).ready(function() {
 		var $article = $('<article>');
 		var $title = $('<div class="panel-title">')

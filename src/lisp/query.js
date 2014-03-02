@@ -8,7 +8,7 @@ define([
 	walk
 ) {
 	var QUERY = {
-		'id': function(ast_id, src) {
+		'id': function(src, ast_id) {
 			var found,
 				id = ast_id.str;
 			walk(src, {

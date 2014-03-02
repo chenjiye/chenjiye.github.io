@@ -64,6 +64,13 @@ define([], function() {
 					index: index
 				}
 				parseMeta(atom, str)
+
+				// Consider stray `.` and `#` to be part of `atom.str`
+				if (str[atom.end] == '.' || str[atom.end] == '#') {
+					atom.str += str[atom.end];
+					atom.end++;
+				}
+
 				atom.snippet = str.substring(atom.start, atom.end)
 				return atom
 			}
