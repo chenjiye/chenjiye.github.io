@@ -1,7 +1,11 @@
 require([
-	'lisp/parser', 'lisp/renderer'
+	'lisp/parser',
+	'lisp/renderer',
+	'lisp/query'
 ], function(
-	parser, renderer
+	parser,
+	renderer,
+	query
 ) {
 	$(document).ready(function() {
 		var $article = $('<article>');
@@ -22,15 +26,15 @@ require([
 				.append($('<div class="sentence">')
 					.html('这是 因为 注音 和 汉字 看起来 <i title="xiāngsì (similar)">相似</i>.'))
 			);
-		var src = parse('(grid (rows (boxes (split 3)).lazy []#triplets))');
+		var src = parser.parse('(grid (rows (boxes (split 3)).lazy []#triplets))');
 		var $panel = $('<div class="panel-body">');
 		var $row = $('<div class="row">').appendTo($panel);
 		var $panel2 = $('<div class="panel-body">');
-		render$(src).appendTo($('<div><h6>Template</h6></div>').appendTo($row))
-		var triplets = parse($.trim($('#bpmf').text()));
+		renderer.render$(src).appendTo($('<div><h6>Template</h6></div>').appendTo($row))
+		var triplets = parser.parse($.trim($('#bpmf').text()));
 		query(src, '(id triplets)').replaceWith(triplets)
-		render$(triplets).appendTo($('<div><h6>Data</h6></div>').appendTo($row))
-		render$(src).appendTo($('<div><h6>Template + Data</h6></div>').appendTo($panel2))
+		renderer.render$(triplets).appendTo($('<div><h6>Data</h6></div>').appendTo($row))
+		renderer.render$(src).appendTo($('<div><h6>Template + Data</h6></div>').appendTo($panel2))
 		$panel.appendTo($article)
 		$panel2.appendTo($article)
 		$('body').prepend($article);

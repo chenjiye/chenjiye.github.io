@@ -3,5 +3,7 @@ define([], function() {
 		var f = context[prog.children[0].str]
 		return f.apply(prog, prog.children.slice(1).concat(args));
 	}
-	return run;
+	return {
+		run: run
+	};
 });

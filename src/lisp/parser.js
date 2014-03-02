@@ -84,4 +84,8 @@ define([], function() {
 			return start + str.substring(start).match(SPACES)[0].length
 		}
 		
+		return {
+			parse: parse,
+			TYPE: TYPE
+		}
 });
