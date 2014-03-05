@@ -4,9 +4,47 @@
 	<meta charset='utf-8'/>
 	<title>你好，我 叫 陳基業.</title>
 	<link rel="stylesheet" href="src/default.css"/>
+	<style>
+		#modal {
+			background:white;
+			padding: 4px;
+			border-radius: 2px;
+			position:absolute;
+			font-size:14px;
+			color:hsl(0,0%,25%);
+			box-shadow: 0 2px 4px hsla(0,0%,0%,0.3), -2px 2px 4px hsla(0,0%,0%,0.3);
+			border: solid 1px hsl(0,0%,70%);
+			min-width:200px;
+		}
+		#modal:before {
+			content:'';
+			position:absolute;
+			width:0;
+			height:0;
+			border-bottom: 8px solid hsl(0,0%,50%);
+			border-left: 4px solid transparent;
+			border-right: 5px solid transparent;
+			top:-8px;
+			left:4px;
+		}
+		#modal:after {
+			content:'';
+			position:absolute;
+			width:0;
+			height:0;
+			border-bottom: 8px solid white;
+			border-left: 4px solid transparent;
+			border-right: 4px solid transparent;
+			top:-8px;
+			left:4px;
+		}
+	</style>
 </head>
 <body>
 	<div id="hello">你<br/>好,<br/>我<br/>叫<br/>陈<br/>基<br/>业。<br/></div>
+	<div id="modal">
+		Creates a table.
+	</div>
 	<article>
 		<div class="panel-title">
 			<div class="date">二零一四年 二月 二日</div>
@@ -76,5 +114,27 @@
 		].triplets
 	</script>
 	<script src="lib/require.js" data-main="src/main.js"></script>
+	<script>
+		$('body').on('focus', 'button.node', function(event) {
+			var $button = $(event.currentTarget)
+			var $modal = $('#modal')
+			var size = {
+				w: $button.outerWidth(),
+				h: $button.outerHeight()
+			}
+			var offset = $button.offset();
+			$modal
+				.show()
+				.offset({
+					left: offset.left,
+					top: offset.top + size.h + 8
+				})
+		});
+		$(document).on('mousedown.MODALCLICK', function(event) {
+			if ($(event.target).closest('#modal')[0]) return;
+			if ($(event.target).closest('button.node')[0]) return;
+			$('#modal').hide();
+		})
+	</script>
 </body>
 </html>
